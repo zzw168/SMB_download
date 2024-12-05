@@ -18,9 +18,9 @@ def smb_download_and_overwrite(remote_host, share_name, username, password, remo
         smbclient.register_session(remote_host, username=username, password=password)
 
         # 删除本地文件夹并重新创建
-        if os.path.exists(local_path):
-            shutil.rmtree(local_path)
-        os.makedirs(local_path)
+        # if os.path.exists(local_path):
+        #     shutil.rmtree(local_path)
+        # os.makedirs(local_path)
 
         # 递归下载函数
         def download_directory(remote_dir, local_dir):
@@ -54,7 +54,7 @@ remote_host = "192.168.0.80"  # 共享文件夹所在主机的 IP 或主机名
 share_name = "img"   # 共享文件夹名称
 username = "administrator"
 password = ""
-remote_path = "./01_秋名山_赛道/"      # 共享文件夹内的路径
+remote_path = "01_秋名山_赛道/"      # 共享文件夹内的路径
 local_path = "./local_folder"  # 本地文件夹路径
 
 smb_download_and_overwrite(remote_host, share_name, username, password, remote_path, local_path)
