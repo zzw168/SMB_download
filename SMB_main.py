@@ -108,11 +108,9 @@ def load_config():
         f = open(file, 'r', encoding='utf-8')
         config_all = eval(f.read())
         f.close()
-        print(config_all)
         tb_camera = ui.tableWidget_camera
         tb_camera.setRowCount(len(config_all.keys()))
         for index, key in enumerate(config_all.keys()):
-            print(config_all[key])
             item = QTableWidgetItem(str(key))
             item.setTextAlignment(Qt.AlignCenter)
             item.setFlags(QtCore.Qt.ItemFlag(Qt.ItemIsSelectable | Qt.ItemIsEnabled))  # 单元格不可编辑
