@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
-    <height>681</height>
+    <width>682</width>
+    <height>496</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>图像识别管理器</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -23,6 +23,54 @@
       <property name="frameShadow">
        <enum>QFrame::Shadow::Raised</enum>
       </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QTableWidget" name="tableWidget_camera">
+         <property name="font">
+          <font>
+           <family>Microsoft YaHei</family>
+           <pointsize>10</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <attribute name="horizontalHeaderStretchLastSection">
+          <bool>true</bool>
+         </attribute>
+         <column>
+          <property name="text">
+           <string>地图编号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>镜头编号</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>旋转</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton_camera_save">
+         <property name="font">
+          <font>
+           <family>Microsoft YaHei</family>
+           <pointsize>10</pointsize>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>保存</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item row="0" column="1">
@@ -95,14 +143,14 @@
              <item row="1" column="1">
               <widget class="QLineEdit" name="lineEdit_share_name">
                <property name="text">
-                <string>img</string>
+                <string/>
                </property>
               </widget>
              </item>
              <item row="4" column="1">
               <widget class="QLineEdit" name="lineEdit_remote_path">
                <property name="text">
-                <string>01_秋名山_赛道</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -119,7 +167,7 @@
              <item row="2" column="1">
               <widget class="QLineEdit" name="lineEdit_username">
                <property name="text">
-                <string>administrator</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -133,7 +181,7 @@
              <item row="0" column="1">
               <widget class="QLineEdit" name="lineEdit_remote_host">
                <property name="text">
-                <string>192.168.0.80</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -168,12 +216,12 @@
              <item row="5" column="1">
               <widget class="QLineEdit" name="lineEdit_local_path">
                <property name="text">
-                <string>./local_folder</string>
+                <string/>
                </property>
               </widget>
              </item>
              <item row="7" column="0" colspan="2">
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="pushButton_update">
                <property name="text">
                 <string>升级并启动</string>
                </property>
@@ -186,7 +234,7 @@
            <widget class="QTextBrowser" name="textBrowser"/>
           </item>
           <item row="1" column="0">
-           <widget class="QPushButton" name="pushButton_2">
+           <widget class="QPushButton" name="pushButton_start">
             <property name="font">
              <font>
               <family>Microsoft YaHei</family>
@@ -212,7 +260,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>806</width>
+     <width>682</width>
      <height>20</height>
     </rect>
    </property>

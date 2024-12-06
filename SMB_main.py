@@ -1,10 +1,51 @@
+import os
 import sys
 
+import yaml
 from PySide6.QtCore import Slot
-from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication
+from PySide6.QtGui import QIcon, Qt
+from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication, QTableWidgetItem
 
 from SMB_ui import Ui_MainWindow
+
+
+def load_config():
+    global config_all
+    file = "cameraPositionConfig.txt"
+    if os.path.exists(file):
+        f = open(file, 'r', encoding='utf-8')
+        config_all = eval(f.read())
+        f.close()
+        print(config_all)
+        tb_camera = ui.tableWidget_camera
+        tb_camera.setRowCount(len(config_all.keys()))
+        for index, key in enumerate(config_all.keys()):
+            print(config_all[key])
+            item = QTableWidgetItem(str(key))
+            item.setTextAlignment(Qt.AlignCenter)
+            tb_camera.setItem(index, 0, item)
+            item_num = QTableWidgetItem(str(config_all[key]['num']))
+            item_num.setTextAlignment(Qt.AlignCenter)
+            tb_camera.setItem(index, 1, item_num)
+            item_flip = QTableWidgetItem(str(config_all[key]['flip']))
+            item_flip.setTextAlignment(Qt.AlignCenter)
+            tb_camera.setItem(index, 2, item_flip)
+
+
+def load_main_yaml():
+    global main_all
+    file = "main_config.yml"
+    if os.path.exists(file):
+        f = open(file, 'r', encoding='utf-8')
+        main_all = yaml.safe_load(f)
+        f.close()
+
+        ui.lineEdit_remote_host.setText(main_all['remote_host'])
+        ui.lineEdit_share_name.setText(main_all['share_name'])
+        ui.lineEdit_username.setText(main_all['username'])
+        ui.lineEdit_password.setText(main_all['password'])
+        ui.lineEdit_remote_path.setText(main_all['remote_path'])
+        ui.lineEdit_local_path.setText(main_all['local_path'])
 
 
 class ZUi(QMainWindow, Ui_MainWindow):
@@ -12,7 +53,10 @@ class ZUi(QMainWindow, Ui_MainWindow):
         super().__init__()
 
     def setupUi(self, z_window):
-        super(ZUi, self).setupUi(z_window)
+        super().setupUi(z_window)
+        tb_camera = self.tableWidget_camera
+        tb_camera.horizontalHeader().setStyleSheet("QHeaderView::section{background:rgb(245,245,245);}")
+        tb_camera.verticalHeader().setStyleSheet("QHeaderView::section{background:rgb(245,245,245);}")
 
 
 class ZMainwindow(QMainWindow):
@@ -80,5 +124,11 @@ if __name__ == '__main__':
     ui = ZUi()
     ui.setupUi(z_window)
     z_window.show()
+
+    main_all = []  # 总体设置
+    config_all = {}  # 镜头设置
+
+    load_main_yaml()
+    load_config()
 
     sys.exit(app.exec())
