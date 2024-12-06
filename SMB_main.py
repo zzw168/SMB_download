@@ -2,6 +2,7 @@ import os
 import sys
 
 import yaml
+from PySide6 import QtCore
 from PySide6.QtCore import Slot
 from PySide6.QtGui import QIcon, Qt
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication, QTableWidgetItem
@@ -9,8 +10,47 @@ from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication, QTableWidg
 from SMB_ui import Ui_MainWindow
 
 
+def is_natural_num(z):
+    try:
+        z = float(z)
+        return isinstance(z, float)
+    except ValueError:
+        return False
+
+
+def table_change():
+    global config_list
+    global config_all
+    tb_camera = ui.tableWidget_camera
+    row = tb_camera.currentRow()
+    col = tb_camera.currentColumn()
+    try:
+        if tb_camera.item(row, col) and not is_natural_num(tb_camera.item(row, col).text()):
+            tb_camera.item(row, col).setText(config_list[row][col])
+        else:
+            config_list[row][col] = tb_camera.item(row, col).text()
+            key = list(config_all.keys())[row]
+            if col == 1:
+                item = 'num'
+            else:
+                item = 'flip'
+            config_all[key][item] = int(tb_camera.item(row, col).text())
+    except:
+        print("数据表操作出错！")
+
+
+def save_config():
+    global config_all
+
+    file = "cameraPositionConfig.txt"
+    if os.path.exists(file):
+        with open(file, "w", encoding="utf-8") as f:
+            f.write(str(config_all))
+
+
 def load_config():
     global config_all
+    global config_list
     file = "cameraPositionConfig.txt"
     if os.path.exists(file):
         f = open(file, 'r', encoding='utf-8')
@@ -23,6 +63,7 @@ def load_config():
             print(config_all[key])
             item = QTableWidgetItem(str(key))
             item.setTextAlignment(Qt.AlignCenter)
+            item.setFlags(QtCore.Qt.ItemFlag(Qt.ItemIsSelectable | Qt.ItemIsEnabled))  # 单元格不可编辑
             tb_camera.setItem(index, 0, item)
             item_num = QTableWidgetItem(str(config_all[key]['num']))
             item_num.setTextAlignment(Qt.AlignCenter)
@@ -30,6 +71,7 @@ def load_config():
             item_flip = QTableWidgetItem(str(config_all[key]['flip']))
             item_flip.setTextAlignment(Qt.AlignCenter)
             tb_camera.setItem(index, 2, item_flip)
+            config_list.append([str(key), str(config_all[key]['num']), str(config_all[key]['flip'])])
 
 
 def load_main_yaml():
@@ -126,9 +168,13 @@ if __name__ == '__main__':
     z_window.show()
 
     main_all = []  # 总体设置
+    config_list = []  # 镜头设置列表
     config_all = {}  # 镜头设置
 
     load_main_yaml()
     load_config()
+
+    ui.tableWidget_camera.itemChanged.connect(table_change)
+    ui.pushButton_camera_save.clicked.connect(save_config)
 
     sys.exit(app.exec())

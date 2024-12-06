@@ -193,7 +193,7 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem1 = self.tableWidget_camera.horizontalHeaderItem(1)
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"\u955c\u5934\u7f16\u53f7", None));
         ___qtablewidgetitem2 = self.tableWidget_camera.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"\u65cb\u8f6c", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"\u65cb\u8f6c(1,0,-1,-2)", None));
         self.pushButton_camera_save.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u5347\u7ea7\u8bbe\u7f6e", None))
         self.lineEdit_share_name.setText("")

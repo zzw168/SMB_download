@@ -51,7 +51,7 @@
          </column>
          <column>
           <property name="text">
-           <string>旋转</string>
+           <string>旋转(1,0,-1,-2)</string>
           </property>
          </column>
         </widget>
