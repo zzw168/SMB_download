@@ -271,5 +271,7 @@ if __name__ == '__main__':
 
     ui.tableWidget_camera.itemChanged.connect(table_change)
     ui.pushButton_camera_save.clicked.connect(save_config)
+    ui.pushButton_update.clicked.connect(update_button)
+    ui.pushButton_start.clicked.connect(start_program)
 
     sys.exit(app.exec())

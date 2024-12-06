@@ -157,6 +157,7 @@ class Ui_MainWindow(object):
 
         self.textBrowser = QTextBrowser(self.frame_3)
         self.textBrowser.setObjectName(u"textBrowser")
+        self.textBrowser.setReadOnly(False)
 
         self.gridLayout_4.addWidget(self.textBrowser, 2, 0, 1, 1)
 
