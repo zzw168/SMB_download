@@ -8,14 +8,8 @@ from PySide6.QtGui import QIcon, Qt
 from PySide6.QtWidgets import QMainWindow, QMessageBox, QApplication, QTableWidgetItem
 
 from SMB_ui import Ui_MainWindow
-
-
-def is_natural_num(z):
-    try:
-        z = float(z)
-        return isinstance(z, float)
-    except ValueError:
-        return False
+from smb_download import smb_download_and_overwrite
+from tool_unit import *
 
 
 def table_change():
@@ -44,8 +38,12 @@ def save_config():
 
     file = "cameraPositionConfig.txt"
     if os.path.exists(file):
-        with open(file, "w", encoding="utf-8") as f:
-            f.write(str(config_all))
+        try:
+            with open(file, "w", encoding="utf-8") as f:
+                f.write(str(config_all))
+            ui.textBrowser.append(succeed('镜头设置成功！'))
+        except:
+            ui.textBrowser.append(fail('镜头设置错误！'))
 
 
 def load_config():
@@ -72,6 +70,35 @@ def load_config():
             item_flip.setTextAlignment(Qt.AlignCenter)
             tb_camera.setItem(index, 2, item_flip)
             config_list.append([str(key), str(config_all[key]['num']), str(config_all[key]['flip'])])
+
+
+def update_file():
+    remote_host = ui.lineEdit_remote_host.text()
+    share_name = ui.lineEdit_share_name.text()
+    username = ui.lineEdit_username.text()
+    password = ui.lineEdit_password.text()
+    remote_path = ui.lineEdit_remote_path.text()
+    local_path = ui.lineEdit_local_path.text()
+
+    smb_download_and_overwrite(remote_host, share_name, username, password, remote_path, local_path)
+
+
+def save_main_yaml():
+    global main_all
+    file = "main_config.yml"
+    if os.path.exists(file):
+        main_all['remote_host'] = ui.lineEdit_remote_host.text()
+        main_all['share_name'] = ui.lineEdit_share_name.text()
+        main_all['username'] = ui.lineEdit_username.text()
+        main_all['password'] = ui.lineEdit_password.text()
+        main_all['remote_path'] = ui.lineEdit_remote_path.text()
+        main_all['local_path'] = ui.lineEdit_local_path.text()
+        try:
+            with open(file, "w", encoding="utf-8") as f:
+                yaml.dump(main_all, f, allow_unicode=True)
+            ui.textBrowser.append(succeed('升级设置保存：成功'))
+        except:
+            ui.textBrowser.append(fail('升级设置保存：失败'))
 
 
 def load_main_yaml():
