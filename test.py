@@ -48,6 +48,7 @@ def get_record(record_id):
 @app.route('/api/records', methods=['PUT'])
 def update_record():
     data = request.json
+    print(data)
     if not data or "id" not in data:
         return jsonify({"error": "Invalid input"}), 400
 
@@ -68,6 +69,7 @@ def update_record():
 @app.route('/api/records', methods=['POST'])
 def add_record():
     data = request.json
+    print(data)
     if not data or "name" not in data or "age" not in data or "email" not in data:
         return jsonify({"error": "Invalid input"}), 400
 
