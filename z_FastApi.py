@@ -33,6 +33,22 @@ records = [
 async def get_records():
     return records
 
+# 获取单条记录
+@app.get("/records/{record_id}", response_model=Record)
+async def get_record(record_id: int):
+    """
+    根据记录 ID 获取单条记录
+    """
+    # 在记录列表中查找对应 ID 的记录
+    record = next((r for r in records if r.id == record_id), None)
+
+    # 如果记录不存在，返回 404 错误
+    if record is None:
+        raise HTTPException(status_code=404, detail="记录未找到")
+
+    return record
+
+
 # 新增记录
 @app.post("/records", response_model=Record)
 async def add_record(record: Record):
@@ -65,6 +81,19 @@ async def batch_delete_records(ids: List[int]):
         )
     records = [r for r in records if r.id not in ids]
     return {"message": "批量删除成功", "deleted_ids": ids}
+
+# 编辑记录
+@app.put("/records/{record_id}", response_model=Record)
+async def update_record(record_id: int, updated_record: Record):
+    # 查找记录是否存在
+    index = next((i for i, r in enumerate(records) if r.id == record_id), None)
+    if index is None:
+        raise HTTPException(status_code=404, detail="记录未找到")
+
+    # 更新记录内容
+    records[index] = updated_record
+    return updated_record
+
 
 # 启动服务的入口
 if __name__ == "__main__":
